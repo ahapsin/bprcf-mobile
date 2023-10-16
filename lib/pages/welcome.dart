@@ -23,9 +23,9 @@ class WelcomePage extends StatelessWidget {
             Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(bottom:20.0),
+                  padding: const EdgeInsets.only(bottom: 20.0),
                   child: CircularProgressIndicator(
-                    backgroundColor: Colors.indigo[800],
+                    color: Colors.indigo[800],
                     strokeWidth: 5,
                   ),
                 ),

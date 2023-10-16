@@ -2,41 +2,60 @@ import 'package:bprcf/pages/dashboard/dashboard.dart';
 import 'package:bprcf/pages/home.dart';
 import 'package:bprcf/pages/intro/auth_page/forgot_pass.dart';
 import 'package:bprcf/pages/intro/auth_page/signup.dart';
+import 'package:bprcf/services/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class SignIn extends StatelessWidget {
+class SignIn extends StatefulWidget {
   const SignIn({super.key});
+
+  @override
+  State<SignIn> createState() => _SignInState();
+}
+
+class _SignInState extends State<SignIn> {
+  TextEditingController _usernameController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Form(
+          key: _formKey,
           child: SingleChildScrollView(
-        child: Column(
-          children: [
-            _buildHeader(),
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.8,
-              child: Column(
-                children: [
-                  SizedBox(
-                      child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            'Masuk ke Akun Anda',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ))),
-                  _buildUsername(),
-                  _buildPassword(),
-                  _buildForgotLink(context),
-                ],
-              ),
+            child: Column(
+              children: [
+                _buildHeader(),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  child: Column(
+                    children: [
+                      SizedBox(
+                          child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Masuk ke Akun Anda',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ))),
+                      _buildUsername(),
+                      _buildPassword(),
+                      _buildForgotLink(context),
+                    ],
+                  ),
+                ),
+                _buildSigninButton(context),
+                _buildLinkSignup(context),
+              ],
             ),
-            _buildSigninButton(context),
-            _buildLinkSignup(context),
-          ],
-        ),
-      )),
+          )),
     );
   }
 
@@ -44,6 +63,9 @@ class SignIn extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextFormField(
+        controller: _usernameController,
+        validator: (value) =>
+            value!.isEmpty ? 'please enter valid username' : null,
         decoration: const InputDecoration(
             border: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.indigo)),
@@ -57,6 +79,8 @@ class SignIn extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextFormField(
+        controller: _passwordController,
+        validator: (value) => value!.isEmpty ? 'please enter password' : null,
         obscureText: true,
         decoration: const InputDecoration(
             border: UnderlineInputBorder(), labelText: 'Password'),
@@ -75,8 +99,18 @@ class SignIn extends StatelessWidget {
         width: MediaQuery.of(context).size.width * 0.8,
         child: TextButton(
             onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Dashboard()));
+              Map creds = {
+                'username': _usernameController.text,
+                'password': _passwordController.text,
+                'device_name': 'mobile'
+              };
+              if (_formKey.currentState!.validate()) {
+                // print(creds);
+                Provider.of<Auth>(context, listen: false).login(creds: creds);
+                Navigator.pop(context);
+              }
+              // Navigator.push(context,
+              //     MaterialPageRoute(builder: (context) => Dashboard()));
             },
             child: const Text(
               "Masuk",

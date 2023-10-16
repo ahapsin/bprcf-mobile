@@ -1,10 +1,11 @@
 import 'package:bprcf/pages/dashboard/home_page.dart';
 import 'package:bprcf/pages/home.dart';
+import 'package:bprcf/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:line_icons/line_icon.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:provider/provider.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -24,10 +25,7 @@ class _DashboardState extends State<Dashboard> {
       'Info',
       style: optionStyle,
     ),
-    Text(
-      'Inbox',
-      style: optionStyle,
-    ),
+    HomePage(),
     Text(
       'Profile',
       style: optionStyle,
@@ -67,6 +65,13 @@ class _DashboardState extends State<Dashboard> {
                 text: 'Profile',
                 icon: LineIcons.user,
               ),
+              GButton(
+                onPressed: () {
+                  _modalConfirmSignOut();
+                },
+                icon: LineIcons.alternateSignOut,
+                iconColor: Colors.red,
+              ),
             ],
             selectedIndex: _selectedIndex,
             onTabChange: (index) {
@@ -78,5 +83,9 @@ class _DashboardState extends State<Dashboard> {
         ),
       ),
     );
+  }
+
+  void _modalConfirmSignOut() {
+    Provider.of<Auth>(context, listen: false).logout();
   }
 }

@@ -1,3 +1,5 @@
+import 'package:bprcf/pages/dashboard/router.dart';
+import 'package:bprcf/pages/dashboard/submission/terms_page.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:introduction_screen/introduction_screen.dart';
@@ -108,7 +110,7 @@ class _HomePageDashState extends State<HomePageDash> {
                                     Text(
                                       'unduh dan cek mutasi',
                                       style: TextStyle(fontSize: 10),
-                                    ))),
+                                    ),RouterPage())),
                             Expanded(
                                 flex: 5,
                                 child: _buildMenuTile(
@@ -123,31 +125,26 @@ class _HomePageDashState extends State<HomePageDash> {
                                     Text(
                                       'Ajukan pinjamanmu sekarang !',
                                       style: TextStyle(fontSize: 10),
-                                    ))),
+                                    ),TermPage())),
                           ],
                         ),
                         Row(
                           children: [
                             Expanded(
                                 flex: 5,
-                                child: GestureDetector(
-                                  onTap: () => {
-                                    print('info mutasi menu di klik')
-                                  },
-                                  child: _buildMenuTile(
-                                      LineIcon.lineChart(
-                                        size: 50,
-                                      ),
-                                      Text(
-                                        'Deposito',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Text(
-                                        'Mulai investasi dengan mudah',
-                                        style: TextStyle(fontSize: 10),
-                                      )),
-                                )),
+                                child: _buildMenuTile(
+                                    LineIcon.lineChart(
+                                      size: 50,
+                                    ),
+                                    Text(
+                                      'Deposito',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      'Mulai investasi dengan mudah',
+                                      style: TextStyle(fontSize: 10),
+                                    ),RouterPage())),
                             Expanded(
                                 flex: 5,
                                 child: _buildMenuTile(
@@ -162,7 +159,7 @@ class _HomePageDashState extends State<HomePageDash> {
                                     Text(
                                       'Cek Tabunganmu disini',
                                       style: TextStyle(fontSize: 10),
-                                    ))),
+                                    ),RouterPage())),
                           ],
                             ),
                       ],
@@ -185,28 +182,33 @@ class _HomePageDashState extends State<HomePageDash> {
     );
   }
 
-  _buildMenuTile(Widget iconTile, labelTile, subLabelTile) {
-    return SizedBox(
-      width: double.infinity,
-      height: MediaQuery.of(context).size.height * 0.2,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.1),
-                spreadRadius: 5,
-                blurRadius: 7,
-                offset: Offset(0, 3),
-              )
-            ],
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-            color: Colors.grey.shade50,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [iconTile, labelTile, subLabelTile],
+  _buildMenuTile(Widget iconTile, labelTile, subLabelTile,Widget widgeScreen) {
+    return GestureDetector(
+      onTap: (){
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> widgeScreen));
+      },
+      child: SizedBox(
+        width: double.infinity,
+        height: MediaQuery.of(context).size.height * 0.2,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.1),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: Offset(0, 3),
+                )
+              ],
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+              color: Colors.grey.shade50,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [iconTile, labelTile, subLabelTile],
+            ),
           ),
         ),
       ),

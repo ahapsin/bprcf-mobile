@@ -1,11 +1,24 @@
+import 'package:bprcf/data/model/profile.dart';
 import 'package:bprcf/data/model/user.dart';
-import 'package:dio/dio.dart';
+import 'package:bprcf/services/dio.dart';
+import 'package:dio/dio.dart' as Dio;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RemoteDataSource {
-  final dio = Dio(BaseOptions(baseUrl: 'http://8a73085df21a.sn.mynetname.net:8080/api'));
-
   Future<DataUser> getUsers() async {
-    final response = await dio.get('/employees');
+    final pref = await SharedPreferences.getInstance();
+    final token = pref.getString('token');
+    final Dio.Response response = await dio().get('/employee');
+    print(response.data);
     return DataUser.fromJson(response.data);
+  }
+
+  Future<Profile> getProfile() async {
+    final pref = await SharedPreferences.getInstance();
+    final token = pref.getString('token');
+    final Dio.Response response = await dio().get('/auth/me',
+        options: Dio.Options(headers: {'Authorization': 'Bearer $token'}));
+    //final profile = profileFromJson(response.toString());
+    return Profile.fromMode(response.data);
   }
 }

@@ -3,7 +3,7 @@ import 'package:dio/dio.dart' as Dio;
 import 'package:flutter/cupertino.dart';
 
 class Auth extends ChangeNotifier {
-  bool _isLoggedIn = false;
+  bool _isLoggedIn = true;
 
   bool get authenticated => _isLoggedIn;
 

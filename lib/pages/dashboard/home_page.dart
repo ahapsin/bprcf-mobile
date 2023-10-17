@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:line_icons/line_icon.dart';
 
@@ -18,13 +19,29 @@ class _HomePageDashState extends State<HomePageDash> {
           preferredSize: Size.fromHeight(100.0),
           child: Center(
             child: Container(
+              margin: EdgeInsets.only(top: 30.0),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
+                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(Iconsax.money,size: 32,color: Colors.white,),
+                        Container(
+                          margin: EdgeInsets.only(left: 10.0, right: 10.0),
+                          child: Text('19,091.78', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),)),
+                        Icon(Iconsax.add_circle, size: 20,color: Colors.white.withOpacity(0.5),)
+                      ],
+                    ),
+                    Row(
                 children: [
+                        Text('👋 Hi, @adi  ', style: TextStyle(color: Colors.white),),
                   PopupMenuButton(
                     icon: CircleAvatar(
+                            radius: 35,
                       backgroundImage: NetworkImage(
-                          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9_efBVwFESnYhQhgAUtA1cNfSDNGYWA6H3Q&usqp=CAU"),
+                                "https://play-lh.googleusercontent.com/-WtmWXbjrtbaZNz9_5RuEqZFnka6X-4f2_JHSrtkMcZOWZk3o3Ypb_G4g5W8WYGVIEgI"),
                       backgroundColor: Colors.red,
                     ),
                     itemBuilder: (BuildContext context) {
@@ -42,6 +59,10 @@ class _HomePageDashState extends State<HomePageDash> {
                   ),
                 ],
               ),
+                    
+                  ],
+                ),
+              ),
             ),
           ),
         ),
@@ -56,7 +77,9 @@ class _HomePageDashState extends State<HomePageDash> {
             ),
             Expanded(
               child: SizedBox(
+                width: double.infinity,
                 child: Container(
+                  alignment: Alignment.topLeft,
                   decoration: BoxDecoration(
                       color: Colors.grey.shade200,
                       borderRadius: BorderRadius.only(
@@ -65,18 +88,128 @@ class _HomePageDashState extends State<HomePageDash> {
                           child: SingleChildScrollView(
                             child: Padding(
                               padding: const EdgeInsets.all(20.0),
-                              child: Container(
-                                child: Text(style: TextStyle(
-                                  fontSize: 25.0,
-                                  height: 1.5
-                                ),'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.'),
-                              ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildLabelTitle(),
+                        Row(
+                          children: [
+                            Expanded(
+                                flex: 5,
+                                child: _buildMenuTile(
+                                    LineIcon.landmark(
+                                      size: 50,
+                                    ),
+                                    Text(
+                                      'Info Mutasi',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      'unduh dan cek mutasi',
+                                      style: TextStyle(fontSize: 10),
+                                    ))),
+                            Expanded(
+                                flex: 5,
+                                child: _buildMenuTile(
+                                    LineIcon.fileContract(
+                                      size: 50,
+                                    ),
+                                    Text(
+                                      'Ajukan Pinjaman',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      'Ajukan pinjamanmu sekarang !',
+                                      style: TextStyle(fontSize: 10),
+                                    ))),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                                flex: 5,
+                                child: GestureDetector(
+                                  onTap: () => {
+                                    print('info mutasi menu di klik')
+                                  },
+                                  child: _buildMenuTile(
+                                      LineIcon.lineChart(
+                                        size: 50,
+                                      ),
+                                      Text(
+                                        'Deposito',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(
+                                        'Mulai investasi dengan mudah',
+                                        style: TextStyle(fontSize: 10),
+                                      )),
+                                )),
+                            Expanded(
+                                flex: 5,
+                                child: _buildMenuTile(
+                                    LineIcon.piggyBank(
+                                      size: 50,
+                                    ),
+                                    Text(
+                                      'Tabungan',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      'Cek Tabunganmu disini',
+                                      style: TextStyle(fontSize: 10),
+                                    ))),
+                          ],
                             ),
+                      ],
                           ),
+                  )),
                 ),
               ),
             ),
           ],
         ));
+  }
+
+  _buildLabelTitle() {
+    return Container(
+      margin: EdgeInsets.all(10),
+      child: Text(
+        'Apa yang anda butuhkan ?',
+        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+      ),
+    );
+  }
+
+  _buildMenuTile(Widget iconTile, labelTile, subLabelTile) {
+    return SizedBox(
+      width: double.infinity,
+      height: MediaQuery.of(context).size.height * 0.2,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.1),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: Offset(0, 3),
+              )
+            ],
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            color: Colors.grey.shade50,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [iconTile, labelTile, subLabelTile],
+          ),
+        ),
+      ),
+    );
   }
 }

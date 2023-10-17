@@ -1,4 +1,6 @@
 import 'package:bprcf/pages/dashboard/home_page.dart';
+import 'package:bprcf/pages/dashboard/product/product_page.dart';
+import 'package:bprcf/pages/dashboard/profile/profile_page.dart';
 import 'package:bprcf/pages/home.dart';
 import 'package:bprcf/services/auth.dart';
 import 'package:flutter/material.dart';
@@ -21,15 +23,9 @@ class _DashboardState extends State<Dashboard> {
 
   static const List<Widget> _widgetOptions = <Widget>[
     HomePageDash(),
-    Text(
-      'Info',
-      style: optionStyle,
-    ),
+    ProductPage(),
     HomePage(),
-    Text(
-      'Profile',
-      style: optionStyle,
-    ),
+    ProfilePageDash(),
   ];
   @override
   Widget build(BuildContext context) {

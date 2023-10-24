@@ -1,8 +1,9 @@
 import 'package:bprcf/pages/dashboard/router.dart';
 import 'package:bprcf/pages/dashboard/submission/terms_page.dart';
+import 'package:bprcf/pages/dashboard/verification/verification_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:introduction_screen/introduction_screen.dart';
 import 'package:line_icons/line_icon.dart';
 
 class HomePageDash extends StatefulWidget {
@@ -12,7 +13,17 @@ class HomePageDash extends StatefulWidget {
   State<HomePageDash> createState() => _HomePageDashState();
 }
 
+class ShowHidebalance extends Cubit<int> {
+  ShowHidebalance() : super(0);
+  void showBalance() {
+    emit(state+1);
+    print(state);
+  }
+}
+
 class _HomePageDashState extends State<HomePageDash> {
+  ShowHidebalance showHidebalance = ShowHidebalance();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,44 +35,80 @@ class _HomePageDashState extends State<HomePageDash> {
               margin: EdgeInsets.only(top: 30.0),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-              child: Row(
-                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
                       children: [
-                        Icon(Iconsax.money,size: 32,color: Colors.white,),
+                        Icon(
+                          Iconsax.money,
+                          size: 23,
+                          color: Colors.white,
+                        ),
                         Container(
-                          margin: EdgeInsets.only(left: 10.0, right: 10.0),
-                          child: Text('19,091.78', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),)),
-                        Icon(Iconsax.add_circle, size: 20,color: Colors.white.withOpacity(0.5),)
+                            width: 165,
+                            margin: EdgeInsets.only(left: 3.0),
+                            child: Row(
+                              children: [
+                                Text(
+                                  'Rp',
+                                  style: TextStyle(
+                                      fontSize: 10,
+                                      color: Colors.white.withOpacity(0.5)),
+                                ),
+                                BlocBuilder(
+                                  bloc: showHidebalance,
+                                  builder: (context, state){
+                                     return Text(
+                                        '$state',
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                            color: Colors.white),
+                                      );
+
+                                }),
+                                GestureDetector(
+                                  onTap: (){
+                                    showHidebalance.showBalance();
+                                  },
+                                  child: Icon(Iconsax.add_circle,
+                                      size: 20,
+                                      color: Colors.white.withOpacity(0.5)),
+                                )
+                              ],
+                            )),
                       ],
                     ),
                     Row(
-                children: [
-                        Text('👋 Hi, @adi  ', style: TextStyle(color: Colors.white),),
-                  PopupMenuButton(
-                    icon: CircleAvatar(
+                      children: [
+                        Text(
+                          '👋 Hi, @adi  ',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        PopupMenuButton(
+                          icon: CircleAvatar(
                             radius: 35,
-                      backgroundImage: NetworkImage(
+                            backgroundImage: NetworkImage(
                                 "https://play-lh.googleusercontent.com/-WtmWXbjrtbaZNz9_5RuEqZFnka6X-4f2_JHSrtkMcZOWZk3o3Ypb_G4g5W8WYGVIEgI"),
-                      backgroundColor: Colors.red,
+                            backgroundColor: Colors.red,
+                          ),
+                          itemBuilder: (BuildContext context) {
+                            return [
+                              PopupMenuItem<String>(
+                                value: '1',
+                                child: Text('1'),
+                              ),
+                              PopupMenuItem<String>(
+                                value: '2',
+                                child: Text('2'),
+                              ),
+                            ];
+                          },
+                        ),
+                      ],
                     ),
-                    itemBuilder: (BuildContext context) {
-                      return [
-                        PopupMenuItem<String>(
-                          value: '1',
-                          child: Text('1'),
-                        ),
-                        PopupMenuItem<String>(
-                          value: '2',
-                          child: Text('2'),
-                        ),
-                      ];
-                    },
-                  ),
-                ],
-              ),
-                    
                   ],
                 ),
               ),
@@ -87,9 +134,9 @@ class _HomePageDashState extends State<HomePageDash> {
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(30),
                           topRight: Radius.circular(30))),
-                          child: SingleChildScrollView(
-                            child: Padding(
-                              padding: const EdgeInsets.all(20.0),
+                  child: SingleChildScrollView(
+                      child: Padding(
+                    padding: const EdgeInsets.all(20.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -110,7 +157,8 @@ class _HomePageDashState extends State<HomePageDash> {
                                     Text(
                                       'unduh dan cek mutasi',
                                       style: TextStyle(fontSize: 10),
-                                    ),RouterPage())),
+                                    ),
+                                    VerificationPage())),
                             Expanded(
                                 flex: 5,
                                 child: _buildMenuTile(
@@ -125,7 +173,8 @@ class _HomePageDashState extends State<HomePageDash> {
                                     Text(
                                       'Ajukan pinjamanmu sekarang !',
                                       style: TextStyle(fontSize: 10),
-                                    ),TermPage())),
+                                    ),
+                                    TermPage())),
                           ],
                         ),
                         Row(
@@ -144,7 +193,8 @@ class _HomePageDashState extends State<HomePageDash> {
                                     Text(
                                       'Mulai investasi dengan mudah',
                                       style: TextStyle(fontSize: 10),
-                                    ),RouterPage())),
+                                    ),
+                                    RouterPage())),
                             Expanded(
                                 flex: 5,
                                 child: _buildMenuTile(
@@ -159,11 +209,12 @@ class _HomePageDashState extends State<HomePageDash> {
                                     Text(
                                       'Cek Tabunganmu disini',
                                       style: TextStyle(fontSize: 10),
-                                    ),RouterPage())),
+                                    ),
+                                    RouterPage())),
                           ],
-                            ),
+                        ),
                       ],
-                          ),
+                    ),
                   )),
                 ),
               ),
@@ -182,10 +233,11 @@ class _HomePageDashState extends State<HomePageDash> {
     );
   }
 
-  _buildMenuTile(Widget iconTile, labelTile, subLabelTile,Widget widgeScreen) {
+  _buildMenuTile(Widget iconTile, labelTile, subLabelTile, Widget widgeScreen) {
     return GestureDetector(
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> widgeScreen));
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => widgeScreen));
       },
       child: SizedBox(
         width: double.infinity,

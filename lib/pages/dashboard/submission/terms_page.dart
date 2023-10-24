@@ -19,26 +19,28 @@ class TermPage extends StatelessWidget {
           children: [
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.8,
-              child: Container(
-                color: Colors.amber,
-                height: double.infinity,
-                child: SingleChildScrollView(
-                    child: Column(
-                  children: [
-                    FutureBuilder<Map<String, dynamic>?>(future: remoteDataSource.getTerms(), builder: (context, snapshot){
-                      if(snapshot.connectionState == ConnectionState.waiting){
-                        return Center(child: CircularProgressIndicator());
-                      } else {
-                        if(snapshot.hasData){
-                           return Text("${snapshot.data!['data']['ID']}");
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  height: double.infinity,
+                  child: SingleChildScrollView(
+                      child: Column(
+                    children: [
+                      FutureBuilder<Map<String, dynamic>?>(future: remoteDataSource.getTerms(), builder: (context, snapshot){
+                        if(snapshot.connectionState == ConnectionState.waiting){
+                          return Center(child: CircularProgressIndicator());
                         } else {
-                          return const Center(child: Text('no data'));
+                          if(snapshot.hasData){
+                             return Text("${snapshot.data!['terms_credit_application']}");
+                          } else {
+                            return const Center(child: Text('no data'));
+                          }
                         }
-                      }
-                     
-                    })
-                  ],
-                )),
+                       
+                      })
+                    ],
+                  )),
+                ),
               ),
             ),
             Center(

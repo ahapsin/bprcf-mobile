@@ -15,19 +15,19 @@ class RemoteDataSource {
     return DataUser.fromJson(response.data);
   }
 
-  Future<Profile> getProfile() async {
+  Future<Map<String, dynamic>?> getProfile() async {
     final pref = await SharedPreferences.getInstance();
     final token = pref.getString('token');
     final Dio.Response response = await dio().get('auth/me',
         options: Dio.Options(headers: {'Authorization': 'Bearer $token'}));
     //final profile = profileFromJson(response.toString());
-    return Profile.fromMode(response.data);
+     return response.data as Map<String, dynamic>;
   }
 
   Future<Map<String, dynamic>?> getTerms() async {
     final pref = await SharedPreferences.getInstance();
     final token = pref.getString('token');
-    final Dio.Response response = await dio().get('employee/c6fb28cc-4eab-11e9-b250-e0d55e0ad3ad',
+    final Dio.Response response = await dio().get('terms',
         options: Dio.Options(headers: {'Authorization': 'Bearer $token'}));
         print('terms token $token');
     return response.data as Map<String, dynamic>;

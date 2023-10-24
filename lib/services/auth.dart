@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth extends ChangeNotifier {
-  bool _isLoggedIn = false;
+  bool _isLoggedIn = true;
 
   bool get authenticated => _isLoggedIn;
 

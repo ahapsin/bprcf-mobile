@@ -3,7 +3,7 @@ import 'package:bprcf/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() {   
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (context) => Auth()),

@@ -1,3 +1,4 @@
+import 'package:bprcf/pages/dashboard/mutation/mutation_page.dart';
 import 'package:bprcf/pages/dashboard/router.dart';
 import 'package:bprcf/pages/dashboard/submission/terms_page.dart';
 import 'package:bprcf/pages/dashboard/verification/verification_page.dart';
@@ -158,7 +159,7 @@ class _HomePageDashState extends State<HomePageDash> {
                                       'unduh dan cek mutasi',
                                       style: TextStyle(fontSize: 10),
                                     ),
-                                    VerificationPage())),
+                                    MutationPage())),
                             Expanded(
                                 flex: 5,
                                 child: _buildMenuTile(

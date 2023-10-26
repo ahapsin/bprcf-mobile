@@ -1,4 +1,5 @@
 import 'package:bprcf/pages/dashboard/dashboard.dart';
+import 'package:bprcf/pages/dashboard/verification/verification_page.dart';
 import 'package:bprcf/pages/home.dart';
 import 'package:bprcf/pages/intro/auth_page/forgot_pass.dart';
 import 'package:bprcf/pages/intro/auth_page/signup.dart';
@@ -107,7 +108,11 @@ class _SignInState extends State<SignIn> {
               if (_formKey.currentState!.validate()) {
                 // print(creds);
                 Provider.of<Auth>(context, listen: false).login(creds: creds);
-                Navigator.pop(context);
+                //Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const VerificationPage()));
               }
               // Navigator.push(context,
               //     MaterialPageRoute(builder: (context) => Dashboard()));

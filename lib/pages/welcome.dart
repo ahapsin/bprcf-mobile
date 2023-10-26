@@ -7,6 +7,7 @@ class WelcomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        padding: EdgeInsets.only(left: 20, right: 20),
         alignment: const Alignment(0, 0),
         color: Colors.white,
         child: Column(

@@ -27,21 +27,24 @@ class ProfilePageDash extends StatelessWidget {
               } else {
                 if (snapshot.hasData) {
                   // return Text("${snapshot.data!['data']['ID']}");
-                  return Column(children: [
-                    _buildCard("${snapshot.data!['data']['customer']['name']}", Casing.lowerCase("${snapshot.data!['data']['customer']['short_name']}"),"${snapshot.data!['data']['profile_photo']}"),
-                    _buildCardData(
-                        'Nomor Rekening', Iconsax.card, "${snapshot.data!['data']['account'][0]['account_number']}"),
-                    _buildCardData(
-                        'Alamat',
-                        Iconsax.home,
-                        Casing.titleCase(
-                            "${snapshot.data!['data']['customer']['address']}")),
-                    _buildCardData('Nomor Handphone', Iconsax.mobile,
-                        "${snapshot.data!['data']['customer']['phone_number']}"
-                           ),
-                    _buildCardData(
-                        'Tanggal Lahir', Iconsax.calendar, "${snapshot.data!['data']['customer']['birth_date']}"),
-                  ]);
+                  return Container(
+                    padding: EdgeInsets.only(left: 20, right: 20),
+                    child: Column(children: [
+                      _buildCard("${snapshot.data!['data']['customer']['name']}", Casing.lowerCase("${snapshot.data!['data']['customer']['short_name']}"),"${snapshot.data!['data']['profile_photo']}"),
+                      _buildCardData(
+                          'Nomor Rekening', Iconsax.card, "${snapshot.data!['data']['account'][0]['account_number']}"),
+                      _buildCardData(
+                          'Alamat',
+                          Iconsax.home,
+                          Casing.titleCase(
+                              "${snapshot.data!['data']['customer']['address']}")),
+                      _buildCardData('Nomor Handphone', Iconsax.mobile,
+                          "${snapshot.data!['data']['customer']['phone_number']}"
+                             ),
+                      _buildCardData(
+                          'Tanggal Lahir', Iconsax.calendar, "${snapshot.data!['data']['customer']['birth_date']}"),
+                    ]),
+                  );
                 } else {
                   return const Center(child: Text('no data'));
                 }

@@ -24,6 +24,11 @@ class RemoteDataSource {
      return response.data as Map<String, dynamic>;
   }
 
+  Future<Map<String, dynamic>?> getMutation() async {
+    final Dio.Response response = await dio().get('history_account/0013000344');
+    return response.data as Map<String, dynamic>;
+  }
+
   Future<Map<String, dynamic>?> getTerms() async {
     final pref = await SharedPreferences.getInstance();
     final token = pref.getString('token');

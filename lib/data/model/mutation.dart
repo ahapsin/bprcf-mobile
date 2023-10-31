@@ -20,5 +20,8 @@ class MutationModel {
     required this.trans_type,
     required this.desc,
   });
-  factory MutationModel.fromMap(Map<String, dynamic> data) => _$MutationModelFromJson(data);
+  factory MutationModel.fromJson(Map<String, dynamic> data) =>
+      _$MutationModelFromJson(data);
+
+  Map<String, dynamic> toJson() => _$MutationModelToJson(this);
 }

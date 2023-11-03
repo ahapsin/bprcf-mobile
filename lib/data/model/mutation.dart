@@ -6,7 +6,7 @@ class MutationModel {
   final String id;
   final String entry_time;
   final String posting_date;
-  final int amount;
+  final double amount;
   final String trans_code;
   final String trans_type;
   final String desc;

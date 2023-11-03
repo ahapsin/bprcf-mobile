@@ -11,7 +11,7 @@ MutationModel _$MutationModelFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String,
       entry_time: json['entry_time'] as String,
       posting_date: json['posting_date'] as String,
-      amount: json['amount'] as int,
+      amount: (json['amount'] as num).toDouble(),
       trans_code: json['trans_code'] as String,
       trans_type: json['trans_type'] as String,
       desc: json['desc'] as String,

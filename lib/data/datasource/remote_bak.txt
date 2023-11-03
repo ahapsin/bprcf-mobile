@@ -43,9 +43,8 @@ class RemoteDataSource {
     //    return response.data;
     // }
     final List<dynamic> responseData = response.data['data'];
-    List<MutationModel> mutation =
-        responseData.map((json) => MutationModel.fromJson(json)).toList();
-    return mutation;
+    List <MutationModel> mutation = responseData.map((json) => MutationModel.fromJson(json)).toList();
+   return mutation;
   }
 
   Future<Map<String, dynamic>?> getTerms() async {

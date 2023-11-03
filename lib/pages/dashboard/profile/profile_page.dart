@@ -1,5 +1,5 @@
 import 'package:bprcf/data/datasource/remote_datasource.dart';
-import 'package:bprcf/pages/dashboard/profile/bloc/profile_bloc.dart';
+import 'package:bprcf/data/model/me/me.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,38 +16,14 @@ class ProfilePageDash extends StatelessWidget {
     return SafeArea(
       child: SizedBox(
         height: double.infinity,
-        child: FutureBuilder<Map<String, dynamic>?>(
+        child: FutureBuilder<MeModel?>(
             future: remoteDataSource.getProfile(),
             builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
-                    child: CircularProgressIndicator(
-                  color: Colors.indigo.shade800,
-                ));
-              } else {
-                if (snapshot.hasData) {
-                  // return Text("${snapshot.data!['data']['ID']}");
-                  return Container(
-                    padding: EdgeInsets.only(left: 20, right: 20),
-                    child: Column(children: [
-                      _buildCard("${snapshot.data!['data']['customer']['name']}", Casing.lowerCase("${snapshot.data!['data']['customer']['short_name']}"),"${snapshot.data!['data']['profile_photo']}"),
-                      _buildCardData(
-                          'Nomor Rekening', Iconsax.card, "${snapshot.data!['data']['account'][0]['account_number']}"),
-                      _buildCardData(
-                          'Alamat',
-                          Iconsax.home,
-                          Casing.titleCase(
-                              "${snapshot.data!['data']['customer']['address']}")),
-                      _buildCardData('Nomor Handphone', Iconsax.mobile,
-                          "${snapshot.data!['data']['customer']['phone_number']}"
-                             ),
-                      _buildCardData(
-                          'Tanggal Lahir', Iconsax.calendar, "${snapshot.data!['data']['customer']['birth_date']}"),
-                    ]),
-                  );
-                } else {
-                  return const Center(child: Text('no data'));
-                }
+              print(snapshot);
+              if(snapshot.hasData){
+                return Text(snapshot.toString());
+              }else{
+                return Center(child: CircularProgressIndicator(),);
               }
             }),
       ),

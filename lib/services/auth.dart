@@ -13,6 +13,7 @@ class Auth extends ChangeNotifier {
 
   bool get authenticated => _isLoggedIn;
   bool get verified => _isVerified;
+  String otpCode = "";
 
   Future<void> login({required Map creds}) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -34,8 +35,18 @@ class Auth extends ChangeNotifier {
     };
     Dio.Response verifyRequest = await dio().post('/verifying',data: credsToVerify);
 
+     otpCode = verifyRequest.data['data']['OTP_CODE'].toString();
+      var message = "*myBPRCF*, Jangan Disebar! Kode OTP Hanyalah Untukmu, Kode OTP anda : *$otpCode*";
+      Map pushData = {
+        'phone_num': verify,
+        'message_body': message,
+      };
+      Dio.Response pushOut =
+          await dio().post('/send_out_push', data: pushData);
+
     print(response.data);
     print(verifyRequest.data);
+    print(pushOut);
 
     _isLoggedIn = true;
     notifyListeners();

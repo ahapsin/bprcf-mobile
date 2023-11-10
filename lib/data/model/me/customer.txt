@@ -17,7 +17,7 @@ class CustomerModel {
     required this.brith_date,
   });
 
-  factory CustomerModel.fromJson(Map<String, dynamic> data) =>
-      _$CustomerModelFromJson(data);
+  factory CustomerModel.fromJson(Map<String, dynamic> json) =>
+      _$CustomerModelFromJson(json);
   Map<String, dynamic> toJson() => _$CustomerModelToJson(this);
 }

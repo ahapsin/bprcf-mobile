@@ -1,5 +1,6 @@
 import 'package:bprcf/data/datasource/remote_datasource.dart';
-import 'package:bprcf/data/model/me/me.dart';
+import 'package:bprcf/data/model/me/data.dart';
+import 'package:bprcf/data/model/me/profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,12 +17,12 @@ class ProfilePageDash extends StatelessWidget {
     return SafeArea(
       child: SizedBox(
         height: double.infinity,
-        child: FutureBuilder<MeModel?>(
+        child: FutureBuilder(
             future: remoteDataSource.getProfile(),
             builder: (context, snapshot) {
-              print(snapshot);
+              print(snapshot.data);
               if(snapshot.hasData){
-                return Text(snapshot.toString());
+                return Text(snapshot.data['data']['username']);
               }else{
                 return Center(child: CircularProgressIndicator(),);
               }

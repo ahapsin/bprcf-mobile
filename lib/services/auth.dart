@@ -8,7 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth extends ChangeNotifier {
-  bool _isLoggedIn = false;
+  bool _isLoggedIn = true;
   bool _isVerified = false;
 
   bool get authenticated => _isLoggedIn;
@@ -27,26 +27,26 @@ class Auth extends ChangeNotifier {
     await prefs.setString('verify', verify);
     await prefs.setString('identifier', identifier);
 
-    Map credsToVerify = {
-      'token': token,
-      'phone': verify,
-      // 'exp': 'expirenya kapan',
-      'status': 'statusnya apa'
-    };
-    Dio.Response verifyRequest = await dio().post('/verifying',data: credsToVerify);
+    // Map credsToVerify = {
+    //   'token': token,
+    //   'phone': verify,
+    //   // 'exp': 'expirenya kapan',
+    //   'status': 'statusnya apa'
+    // };
+    // //Dio.Response verifyRequest = await dio().post('/verifying',data: credsToVerify);
 
-     otpCode = verifyRequest.data['data']['OTP_CODE'].toString();
-      var message = "*myBPRCF*, Jangan Disebar! Kode OTP Hanyalah Untukmu, Kode OTP anda : *$otpCode*";
-      Map pushData = {
-        'phone_num': verify,
-        'message_body': message,
-      };
-      Dio.Response pushOut =
-          await dio().post('/send_out_push', data: pushData);
+    //  otpCode = verifyRequest.data['data']['OTP_CODE'].toString();
+    //   var message = "*myBPRCF*, Jangan Disebar! Kode OTP Hanyalah Untukmu, Kode OTP anda : *$otpCode*";
+    //   Map pushData = {
+    //     'phone_num': verify,
+    //     'message_body': message,
+    //   };
+    //   Dio.Response pushOut =
+    //       await dio().post('/send_out_push', data: pushData);
 
     print(response.data);
-    print(verifyRequest.data);
-    print(pushOut);
+    // print(verifyRequest.data);
+    // print(pushOut);
 
     _isLoggedIn = true;
     notifyListeners();

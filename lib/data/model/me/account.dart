@@ -13,7 +13,7 @@ class AccountModel {
     required this.type,
   });
 
-  factory AccountModel.fromJson(Map<String, dynamic> data) =>
-      _$AccountModelFromJson(data);
+  factory AccountModel.fromJson(Map<String, dynamic> json) =>
+      _$AccountModelFromJson(json);
   Map<String, dynamic> toJson() => _$AccountModelToJson(this);
 }

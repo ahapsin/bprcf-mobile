@@ -1,8 +1,7 @@
 import 'dart:convert';
 
-import 'package:bprcf/data/model/me/me.dart';
+import 'package:bprcf/data/model/me/profile.dart';
 import 'package:bprcf/data/model/mutation.dart';
-import 'package:bprcf/data/model/profile.dart';
 import 'package:bprcf/data/model/user.dart';
 import 'package:bprcf/services/dio.dart';
 import 'package:dio/dio.dart' as Dio;
@@ -15,15 +14,16 @@ class RemoteDataSource {
     return DataUser.fromJson(response.data);
   }
 
-  Future<MeModel?> getProfile() async {
+  Future getProfile() async {
     final pref = await SharedPreferences.getInstance();
     final token = pref.getString('token');
     final Dio.Response response = await dio().get('auth/me',
         options: Dio.Options(headers: {'Authorization': 'Bearer $token'}));
     // final Dio.Response response = await dio().get('https://fakestoreapi.com/products/1');
-    // final Map<String, dynamic> responseData = response.data;
-    // print(response.data['data']);
-    return MeModel.fromJson(response.data);
+
+    return response.data;
+
+    //return responseData;
 // Map<String, dynamic> data = (json.decode(response.data) as Map<String, dynamic>);
 //     return MeModel.fromJson(data);
   }
@@ -48,6 +48,13 @@ class RemoteDataSource {
     return mutation;
   }
 
+Future<Map<String,dynamic>> getMutasi(String? user) async{
+    final pref = await SharedPreferences.getInstance();
+    final token = pref.getString('token');
+    final Dio.Response response = await dio().get('https://reqres.in/api/users/$user',);
+    print('terms token $token');
+    return response.data as Map<String, dynamic>;
+}
   Future<Map<String, dynamic>?> getTerms() async {
     final pref = await SharedPreferences.getInstance();
     final token = pref.getString('token');

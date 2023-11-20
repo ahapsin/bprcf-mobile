@@ -1,4 +1,5 @@
 import 'package:bprcf/pages/dashboard/dashboard.dart';
+import 'package:bprcf/pages/dashboard/home/home_page.dart';
 import 'package:bprcf/pages/dashboard/verification/verification_page.dart';
 import 'package:bprcf/pages/home.dart';
 import 'package:bprcf/pages/intro/auth_page/forgot_pass.dart';

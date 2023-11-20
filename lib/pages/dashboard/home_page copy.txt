@@ -1,0 +1,269 @@
+import 'package:bprcf/pages/dashboard/mutation/mutation_page.dart';
+import 'package:bprcf/pages/dashboard/router.dart';
+import 'package:bprcf/pages/dashboard/submission/terms_page.dart';
+import 'package:bprcf/pages/dashboard/verification/verification_page.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:line_icons/line_icon.dart';
+
+class HomePageDash extends StatefulWidget {
+  const HomePageDash({super.key});
+
+  @override
+  State<HomePageDash> createState() => _HomePageDashState();
+}
+
+class ShowHidebalance extends Cubit<int> {
+  ShowHidebalance() : super(0);
+  void showBalance() {
+    emit(state + 1);
+    print(state);
+  }
+}
+
+class _HomePageDashState extends State<HomePageDash> {
+  ShowHidebalance showHidebalance = ShowHidebalance();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(100.0),
+          child: Center(
+            child: Container(
+              margin: EdgeInsets.only(top: 30.0),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          Iconsax.money,
+                          size: 23,
+                          color: Colors.white,
+                        ),
+                        Container(
+                            width: 165,
+                            margin: EdgeInsets.only(left: 3.0),
+                            child: Row(
+                              children: [
+                                Text(
+                                  'Rp',
+                                  style: TextStyle(
+                                      fontSize: 10,
+                                      color: Colors.white.withOpacity(0.5)),
+                                ),
+                                BlocBuilder(
+                                    bloc: showHidebalance,
+                                    builder: (context, state) {
+                                      return Text(
+                                        '$state',
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                            color: Colors.white),
+                                      );
+                                    }),
+                                GestureDetector(
+                                  onTap: () {
+                                    showHidebalance.showBalance();
+                                  },
+                                  child: Icon(Iconsax.add_circle,
+                                      size: 20,
+                                      color: Colors.white.withOpacity(0.5)),
+                                )
+                              ],
+                            )),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          '👋 Hi, @adi  ',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        PopupMenuButton(
+                          icon: CircleAvatar(
+                            radius: 35,
+                            backgroundImage: NetworkImage(
+                                "https://play-lh.googleusercontent.com/-WtmWXbjrtbaZNz9_5RuEqZFnka6X-4f2_JHSrtkMcZOWZk3o3Ypb_G4g5W8WYGVIEgI"),
+                            backgroundColor: Colors.red,
+                          ),
+                          itemBuilder: (BuildContext context) {
+                            return [
+                              PopupMenuItem<String>(
+                                value: '1',
+                                child: Text('1'),
+                              ),
+                              PopupMenuItem<String>(
+                                value: '2',
+                                child: Text('2'),
+                              ),
+                            ];
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+        backgroundColor: Colors.indigo.shade800,
+        body: Column(
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height / 4,
+              child: Container(
+                color: Colors.transparent,
+              ),
+            ),
+            Expanded(
+              child: SizedBox(
+                width: double.infinity,
+                child: Container(
+                  alignment: Alignment.topLeft,
+                  decoration: BoxDecoration(
+                      color: Colors.grey.shade200,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30))),
+                  child: SingleChildScrollView(
+                      child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildLabelTitle(),
+                        Row(
+                          children: [
+                            Expanded(
+                                flex: 5,
+                                child: _buildMenuTile(
+                                    LineIcon.landmark(
+                                      size: 50,
+                                    ),
+                                    Text(
+                                      'Info Mutasi',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      'unduh dan cek mutasi',
+                                      style: TextStyle(fontSize: 10),
+                                    ),
+                                    MutationPage())),
+                            Expanded(
+                                flex: 5,
+                                child: _buildMenuTile(
+                                    LineIcon.fileContract(
+                                      size: 50,
+                                    ),
+                                    Text(
+                                      'Ajukan Pinjaman',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      'Ajukan pinjamanmu sekarang !',
+                                      style: TextStyle(fontSize: 10),
+                                    ),
+                                    TermPage())),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                                flex: 5,
+                                child: _buildMenuTile(
+                                    LineIcon.lineChart(
+                                      size: 50,
+                                    ),
+                                    Text(
+                                      'Deposito',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      'Mulai investasi dengan mudah',
+                                      style: TextStyle(fontSize: 10),
+                                    ),
+                                    RouterPage())),
+                            Expanded(
+                                flex: 5,
+                                child: _buildMenuTile(
+                                    LineIcon.piggyBank(
+                                      size: 50,
+                                    ),
+                                    Text(
+                                      'Tabungan',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      'Cek Tabunganmu disini',
+                                      style: TextStyle(fontSize: 10),
+                                    ),
+                                    RouterPage())),
+                          ],
+                        ),
+                      ],
+                    ),
+                  )),
+                ),
+              ),
+            ),
+          ],
+        ));
+  }
+
+  _buildLabelTitle() {
+    return Container(
+      margin: EdgeInsets.all(10),
+      child: Text(
+        'Apa yang anda butuhkan ?',
+        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+      ),
+    );
+  }
+
+  _buildMenuTile(Widget iconTile, labelTile, subLabelTile, Widget widgeScreen) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => widgeScreen));
+      },
+      child: SizedBox(
+        width: double.infinity,
+        height: MediaQuery.of(context).size.height * 0.2,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.1),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: Offset(0, 3),
+                )
+              ],
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+              color: Colors.grey.shade50,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [iconTile, labelTile, subLabelTile],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
